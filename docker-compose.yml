@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ticketing
+      POSTGRES_USER: ticketing
+      POSTGRES_PASSWORD: ticketing
+    ports:
+      - "5433:5432"
+  redis:
+    image: redis:7
+  web:
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile
+    command: sh docker/django/entrypoint.sh
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file: .env.dev
+    depends_on:
+      - db
+      - redis
