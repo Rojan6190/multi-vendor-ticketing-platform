@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
+    "core",
 ]
 
 MIDDLEWARE = [
@@ -75,3 +77,45 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    # Envelope renderer — wraps EVERY response in {status, message, data},
+    # even ones that skip APIResponse manually. See core/renderers.py
+    "DEFAULT_RENDERER_CLASSES": [
+        "core.renderers.EnvelopeJSONRenderer",
+    ],
+
+    # Catches every raised exception (custom or DRF's own) and reshapes
+    # it into the same envelope. See core/exception_handlers.py
+    "EXCEPTION_HANDLER": "core.exception_handlers.custom_exception_handler",
+
+    # Applies to every list endpoint by default (page, pages, page_size,
+    # next, previous — nested under "pagination" in the response).
+    # See core/pagination.py
+    "DEFAULT_PAGINATION_CLASS": "core.pagination.DefaultPagination",
+    "PAGE_SIZE": 20,
+
+    # Auth: JWT will plug in here on Day 3 — placeholder for now
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",  # Day 3
+    ],
+
+    # Locked down by default — individual views override this with
+    # IsOwner / IsOrganizer / IsAdmin from core/permissions.py as needed
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+
+    # Global throttle — applies to every endpoint automatically.
+    # BurstRateThrottle is intentionally NOT listed here; attach it
+    # per-view only on sensitive endpoints (login, OTP, payments).
+    "DEFAULT_THROTTLE_CLASSES": [
+        "core.throttling.SustainedRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "burst": "10/min",
+        "sustained": "1000/day",
+    },
+}
