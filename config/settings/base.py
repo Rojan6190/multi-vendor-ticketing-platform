@@ -19,8 +19,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    "rest_framework_simplejwt",
     "core",
+    "apps.users"
 ]
+AUTH_USER_MODEL = "users.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,7 +102,7 @@ REST_FRAMEWORK = {
     # Auth: JWT will plug in here on Day 3 — placeholder for now
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
-        # "rest_framework_simplejwt.authentication.JWTAuthentication",  # Day 3
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # Day 3
     ],
 
     # Locked down by default — individual views override this with
@@ -118,4 +121,11 @@ REST_FRAMEWORK = {
         "burst": "10/min",
         "sustained": "1000/day",
     },
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes = 30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
 }
