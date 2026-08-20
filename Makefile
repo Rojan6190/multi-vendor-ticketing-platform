@@ -1,4 +1,4 @@
-.PHONY: up upd down build logs migrate makemigrations superuser shell test bash
+.PHONY: up upd down build ps rebuild logs migrate makemigrations superuser shell test bash
 
 up:                  ## run in foreground
 	docker compose up
@@ -11,6 +11,13 @@ down:
 
 build:
 	docker compose build
+
+ps:
+	docker compose ps
+
+rebuild:
+	docker compose build
+	docker compose up -d
 
 logs:
 	docker compose logs -f web
