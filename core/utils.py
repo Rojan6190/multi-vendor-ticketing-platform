@@ -1,6 +1,6 @@
 import uuid
 from django.utils.text import slugify
-
+import secrets
 
 def generate_unique_slug(instance, value, slug_field="slug"):
     """
@@ -15,3 +15,7 @@ def generate_unique_slug(instance, value, slug_field="slug"):
         slug = f"{base_slug}-{uuid.uuid4().hex[:6]}"
 
     return slug
+
+def generate_otp(length=6):
+    #Cryptographically-random numeric OTP- secrets, not random, since this gates account security.
+    return "".join(str(secrets.randbelow(10)) for _ in range(length))

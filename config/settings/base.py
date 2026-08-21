@@ -20,8 +20,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework",
     "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "core",
-    "apps.users"
+    "apps.users",
+    "apps.authentication",
 ]
 AUTH_USER_MODEL = "users.CustomUser"
 
@@ -82,6 +84,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+GOOGLE_CLIENT_ID = env_config("GOOGLE_CLIENT_ID", default="")
+
+#Console backend for dev - swap to SMTP/SES in prod.py
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "noreply@ticketing.local"
+
+#LocMemCache for now - becomes Redis-backed on Day 8/10, no code changes needed elsewhere
+CACHES = {
+    "default": {
+        "BACKEND":"django.core.cache.backends.locmem.LocMemCache",
+    }
+}
+
+
 REST_FRAMEWORK = {
     # Envelope renderer — wraps EVERY response in {status, message, data},
     # even ones that skip APIResponse manually. See core/renderers.py
@@ -120,6 +136,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "burst": "10/min",
         "sustained": "1000/day",
+        "otp":"3/min",
     },
 }
 
@@ -128,4 +145,5 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes = 30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True, #old refresh token dies on every rotation too
 }

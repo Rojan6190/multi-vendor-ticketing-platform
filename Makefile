@@ -27,6 +27,9 @@ migrate:
 
 makemigrations:
 	docker compose exec web python manage.py makemigrations
+	
+migrations-%:
+	docker compose exec web python manage.py makemigrations $*
 
 superuser:
 	docker compose exec web python manage.py createsuperuser

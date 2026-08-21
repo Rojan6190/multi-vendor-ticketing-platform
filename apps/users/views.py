@@ -31,6 +31,6 @@ class MeView(APIResponseMixin, generics.RetrieveAPIView):
 class LoginView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
-class RefreshView(TokenObtainPairView):
+class RefreshView(TokenRefreshView):
     pass
 
