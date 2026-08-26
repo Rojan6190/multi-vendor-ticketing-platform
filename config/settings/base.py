@@ -24,7 +24,13 @@ INSTALLED_APPS = [
     "core",
     "apps.users",
     "apps.authentication",
+    "apps.vendors",
 ]
+# add media config — first time we actually store user-uploaded files
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
 AUTH_USER_MODEL = "users.CustomUser"
 
 MIDDLEWARE = [

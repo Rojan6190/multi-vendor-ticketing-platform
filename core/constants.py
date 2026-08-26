@@ -22,3 +22,17 @@ class EventStatus(models.TextChoices):
     PUBLISHED = "published", "Published"
     CANCELLED = "cancelled", "Cancelled"
     COMPLETED = "completed", "Completed"
+
+#vendor related enums
+class VendorStatus(models.TextChoices):
+    PENDING = "pending", "Pending"
+    APPROVED = "approved", "Approved"
+    REJECTED = "rejected", "Rejected"
+
+class DocumentType(models.TextChoices):
+    BUSINESS_REGISTRATION = "business_registration", "Business Registration"
+    ID_PROOF = "id_proof", "ID Proof"
+
+class PayoutMethod(models.TextChoices):
+    BANK = "bank", "Bank Account"
+    WALLET = "wallet", "Mobile Wallet"
