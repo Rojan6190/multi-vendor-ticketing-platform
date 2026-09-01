@@ -48,6 +48,6 @@ class EventDetailSerializer(serializers.ModelSerializer):
         end = attrs.get("end_datetime", getattr(self.instance, "end_datetime", None))
         if start and end and end <= start:
             raise serializers.ValidationError("end_datetime must be after start_datetime. ")
-        if self.isinstance is None and start and start <= timezone.now():
+        if self.instance is None and start and start <= timezone.now():
             raise serializers.ValidationError("start_datetime must be in the future.")
         return attrs
