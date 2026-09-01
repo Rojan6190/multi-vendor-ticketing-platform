@@ -22,9 +22,11 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "core",
+    "django_filters",
     "apps.users",
     "apps.authentication",
     "apps.vendors",
+    "apps.events"
 ]
 # add media config — first time we actually store user-uploaded files
 MEDIA_URL = "media/"

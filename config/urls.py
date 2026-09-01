@@ -22,6 +22,7 @@ urlpatterns = [
     path('api/v1/users/', include("apps.users.urls")),
     path('api/v1/auth/', include("apps.authentication.urls")),
     path('api/v1/vendors/', include("apps.vendors.urls")),
+    path('api/v1/events/', include("apps.events.urls")),
 ]
 
 handler404 = "core.exception_handlers.custom_404"
