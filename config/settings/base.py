@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.authentication",
     "apps.vendors",
-    "apps.events"
+    "apps.events",
+    "apps.tickets"
 ]
 # add media config — first time we actually store user-uploaded files
 MEDIA_URL = "media/"

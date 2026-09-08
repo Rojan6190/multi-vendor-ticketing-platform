@@ -19,3 +19,11 @@ def generate_unique_slug(instance, value, slug_field="slug"):
 def generate_otp(length=6):
     #Cryptographically-random numeric OTP- secrets, not random, since this gates account security.
     return "".join(str(secrets.randbelow(10)) for _ in range(length))
+
+
+def generate_qr_code(data: str):
+    """
+    Stub - real implementation (later) uses the 'qrcode' library to encode
+    'data' (e.g. booking.reference) into a PNG saved to Booking.qr_code.
+    """
+    return None
