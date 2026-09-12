@@ -27,8 +27,26 @@ INSTALLED_APPS = [
     "apps.authentication",
     "apps.vendors",
     "apps.events",
-    "apps.tickets"
+    "apps.tickets",
+    "channels", 
+    "apps.realtime",
 ]
+
+ASGI_APPLICATION = "config.asgi.application"
+
+REDIS_URL = env_config("REDIS_URL", default="redis://redis:6379/1")
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {"hosts": [REDIS_URL]},
+    },
+}
+
+
+
+
+
 # add media config — first time we actually store user-uploaded files
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
