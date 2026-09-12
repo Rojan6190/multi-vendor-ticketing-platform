@@ -12,7 +12,7 @@ class TicketTier(BaseModel):
     description = models.TextField(blank= True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     total_quantity = models.PositiveIntegerField()
-    sold_quantity = models.PositiveIntegerField()
+    sold_quantity = models.PositiveIntegerField(default=0)
     sales_start = models.DateTimeField(null=True, blank=True)
     sales_end = models.DateTimeField(null=True, blank=True)
 

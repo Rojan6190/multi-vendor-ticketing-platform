@@ -25,12 +25,12 @@ class TicketBookingTests(APITestCase):
 
     def test_booking_reduces_availability(self):
         self.client.force_authenticate(self.attendee)
-        response = self.client.post(f"/api/v1/ticket-tiers/{self.tier.id}/bookings/", {"quantity": 2})
+        response = self.client.post(f"/api/v1/tickets/ticket-tiers/{self.tier.id}/bookings/", {"quantity": 2})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.tier.refresh_from_db()
         self.assertEqual(self.tier.sold_quantity, 2)
 
     def test_overbooking_rejected(self):
         self.client.force_authenticate(self.attendee)
-        response = self.client.post(f"/api/v1/ticket-tiers/{self.tier.id}/bookings/", {"quantity": 3})
+        response = self.client.post(f"/api/v1/tickets/ticket-tiers/{self.tier.id}/bookings/", {"quantity": 3})
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
